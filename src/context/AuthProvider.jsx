@@ -33,11 +33,11 @@ export const AuthProvider = ({ children }) => {
       return false;
     }
 
-    // Transformar los datos a un objeto de javascript
-    const userObj = JSON.parse(user);
-    const userId = userObj.id;
-
     try {
+      // Transformar los datos a un objeto de javascript
+      const userObj = JSON.parse(user);
+      const userId = userObj.id;
+
       // Petición Ajax al backend que compruebe el token y que nos devuelva todos los datos del usuario
       const request = await fetch(Global.url + "user/profile/" + userId, {
         method: "GET",
@@ -53,6 +53,12 @@ export const AuthProvider = ({ children }) => {
 
       const data = await request.json();
 
+      // Setear el estado de Auth
+      setAuth(data.user);
+      
+      // Asegurar que loading se actualice a false
+      setLoading(false);
+
       // Petición Ajax al backend para los contadores
       const requestCounters = await fetch(Global.url + "user/counters/" + userId, {
         method: "GET",
@@ -67,9 +73,6 @@ export const AuthProvider = ({ children }) => {
       }
 
       const dataCounters = await requestCounters.json();
-
-      // Setear el estado de Auth
-      setAuth(data.user);
 
       // Setear el estado de Counters
       setCounters(dataCounters);

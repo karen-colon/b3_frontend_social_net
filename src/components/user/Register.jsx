@@ -138,7 +138,6 @@ export const Register = () => {
                 name="bio"
                 onChange={changed}
                 value={form.bio || ''}
-                autoComplete="biografía"
               />
             </div>
             <div className="form-group">

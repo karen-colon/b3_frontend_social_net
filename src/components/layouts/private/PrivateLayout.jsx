@@ -26,7 +26,6 @@ export const PrivateLayout = () => {
 
         {/* Barra Lateral */}
         <Sidebar />
-
       </>
     );
   }

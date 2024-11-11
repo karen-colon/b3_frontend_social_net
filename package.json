@@ -20,7 +20,8 @@
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.27.0",
     "react-time-ago": "^7.3.3",
-    "sweetalert2": "^11.14.4"
+    "sweetalert2": "^11.14.4",
+    "vue-router": "^4.4.5"
   },
   "devDependencies": {
     "@eslint/js": "^9.13.0",

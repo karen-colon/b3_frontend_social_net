@@ -3,12 +3,18 @@ import ResponseForm from './ResponseForm';
 import ResponseList from './ResponseList';
 
 function Post({ post, userId }) {
-    return ( < div >
+    return ( <
+        div >
         <
-        h3 > { post.title } < /h3> <p> { post.content } </p >
-        <
+        h3 > { post.title } < /h3> <
+        p > { post.content } < /p> <
         ResponseList postId = { post._id }
-        /> <ResponseForm postId = { post._id }userId = { userId }/ > < /div>);
-    }
+        /> <
+        ResponseForm postId = { post._id }
+        userId = { userId }
+        /> <
+        /div>
+    );
+}
 
-    export default Post;
+export default Post;

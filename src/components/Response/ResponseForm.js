@@ -1,35 +1,34 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-function ResponseForm({ postId, userId }) {
-    const [responseText, setResponseText] = useState('');
+function Responses({ postId }) {
+    const [responses, setResponses] = useState([]);
 
-    const handleSubmit = async(e) => {
-        e.preventDefault();
-        try {
-            const response = await axios.post('http://localhost:3900/api/responses', {
-                postId,
-                userId,
-                text: responseText
-            });
-            console.log(response.data); // Maneja la respuesta del servidor
-            setResponseText(''); // Limpiar el campo de texto
-        } catch (error) {
-            console.error('Error al enviar la respuesta:', error);
-        }
-    };
+    useEffect(() => {
+        const fetchResponses = async() => {
+            try {
+                const response = await axios.get(`http://localhost:3900/api/responses/${postId}`);
+                setResponses(response.data); // Asegúrate de que la respuesta contenga las respuestas correctas
+            } catch (error) {
+                console.error('Error al obtener respuestas:', error);
+            }
+        };
 
-    return ( < form onSubmit = { handleSubmit } >
-        <
-        textarea value = { responseText }
-        onChange = {
-            (e) => setResponseText(e.target.value)
-        }
-        placeholder = "Escribe tu respuesta..."
-        required / >
-        <
-        button type = "submit" > Responder < /button> </form >
+        fetchResponses();
+    }, [postId]);
+
+    return ( <
+        div > {
+            responses.map((response) => ( <
+                div key = { response._id } >
+                <
+                p > < strong > { response.userId } < /strong>: {response.text}</p >
+                <
+                /div>
+            ))
+        } <
+        /div>
     );
 }
 
-export default ResponseForm;
+export default Responses;

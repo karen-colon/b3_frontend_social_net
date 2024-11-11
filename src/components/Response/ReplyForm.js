@@ -23,16 +23,18 @@ const ReplyForm = ({ postId, onReplySubmitted }) => {
             console.error('Error al enviar la respuesta:', error);
         }
     };
-    return ( < form onSubmit = { submitReply } >
+
+    return ( <
+        form onSubmit = { submitReply } >
         <
         textarea value = { replyText }
         onChange = { handleReplyChange }
         placeholder = "Escribe tu respuesta aquí"
-        rows = "3" / >
+        rows = "3" /
+        >
         <
-        button type = "submit" > Responder < /button> </form >
-
-
+        button type = "submit" > Responder < /button> <
+        /form>
     );
 };
 

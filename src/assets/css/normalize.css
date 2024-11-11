@@ -1,8 +1,13 @@
+/* Reset global box sizing */
+
 *,
 *::before,
 *::after {
     box-sizing: border-box;
 }
+
+
+/* Estilo base de los elementos */
 
 ul,
 ol {
@@ -26,43 +31,198 @@ dd {
     margin: 0;
 }
 
+
+/* Cuerpo general con transición suave */
+
 body {
     min-height: 100vh;
     scroll-behavior: smooth;
     text-rendering: optimizeSpeed;
     line-height: 1.5;
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(45deg, #f3e5f5, #e1bee7);
+    transition: background-color 0.3s ease-in-out;
+    overflow-x: hidden;
+    /* Evita el desplazamiento horizontal */
+    position: relative;
+    height: 100%;
+    /* Mantiene la página en su lugar */
 }
+
+
+/* Efecto de fondo interactivo, sin mover la página */
+
+body:hover {
+    background: linear-gradient(45deg, #e1bee7, #f3e5f5);
+}
+
+
+/* Listas sin estilo */
 
 ul[class],
 ol[class] {
     list-style: none;
 }
 
+
+/* Enlaces con efecto de color y animación de escala */
+
 a:not([class]) {
-    text-decoration-skip-ink: auto;
+    text-decoration: none;
+    color: #5c6bc0;
+    transition: color 0.3s ease, transform 0.3s ease;
 }
+
+a:not([class]):hover {
+    color: #c2185b;
+    transform: scale(1.1);
+}
+
+
+/* Imágenes de ancho completo con transición */
 
 img {
     max-width: 100%;
     display: block;
+    transition: transform 0.3s ease-in-out;
 }
+
+img:hover {
+    transform: scale(1.05);
+}
+
+
+/* Separación entre elementos */
 
 article>*+* {
     margin-top: 1em;
 }
+
+
+/* Estilo para formularios con efectos */
 
 input,
 button,
 textarea,
 select {
     font: inherit;
+    border-radius: 8px;
+    padding: 10px;
+    transition: all 0.3s ease, background-color 0.3s ease;
 }
 
-@media(prefers-reduced-motion:reduce) {
+
+/* Animación al interactuar con los formularios */
+
+input:focus,
+button:focus,
+textarea:focus,
+select:focus {
+    border-color: #7e57c2;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-color: #f3e5f5;
+}
+
+
+/* Botones con animación de rebote */
+
+button {
+    background-color: #7e57c2;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 1.1em;
+    transition: all 0.2s ease-in-out;
+}
+
+button:hover {
+    transform: scale(1.1) rotate(5deg);
+    background-color: #c2185b;
+}
+
+
+/* Animaciones para transiciones */
+
+@keyframes changeMood {
+    0% {
+        background: linear-gradient(45deg, #f3e5f5, #e1bee7);
+    }
+    25% {
+        background: linear-gradient(45deg, #c1e1e1, #b2dfdb);
+    }
+    50% {
+        background: linear-gradient(45deg, #f8bbd0, #e1bee7);
+    }
+    75% {
+        background: linear-gradient(45deg, #e7d4dc, #beb6b6);
+    }
+    100% {
+        background: linear-gradient(45deg, #f3e5f5, #e1bee7);
+    }
+}
+
+
+/* Cambiar de humor con animación */
+
+body:hover {
+    animation: changeMood 10s infinite alternate;
+}
+
+
+/* Efecto de paralaje solo para el contenido */
+
+section {
+    position: relative;
+    animation: parallaxEffect 20s linear infinite;
+}
+
+
+/* Efecto de paralaje */
+
+@keyframes parallaxEffect {
+    0% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+
+/* Optimización para reducir movimiento */
+
+@media (prefers-reduced-motion: reduce) {
     * {
         animation-duration: .01ms !important;
         animation-iteration-count: 1 !important;
         transition-duration: .01ms !important;
         scroll-behavior: auto !important;
+    }
+}
+
+
+/* Contenido que se desplaza */
+
+.content {
+    position: relative;
+    z-index: 1;
+    animation: contentMove 10s ease-in-out infinite;
+}
+
+
+/* Animación de movimiento de contenido */
+
+@keyframes contentMove {
+    0% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-20px);
+    }
+    100% {
+        transform: translateY(0);
     }
 }

@@ -5,24 +5,25 @@ function Responses({ postId }) {
     const [responses, setResponses] = useState([]);
 
     useEffect(() => {
-        const fetchResponses = async() => {
-            try {
-                const response = await axios.get(`http://localhost:3900/api/responses/${postId}`);
-                setResponses(response.data); // Asegúrate de que la respuesta contenga las respuestas correctas
-            } catch (error) {
-                console.error('Error al obtener respuestas:', error);
-            }
-        };
+            const fetchResponses = async() => {
+                try {
+                    const response = await axios.get(`http://localhost:3900/api/responses/${postId}`);
+                    setResponses(response.data); // Asegúrate de que la respuesta contenga las respuestas correctas
+                } catch (error) {
+                    console.error('Error al obtener respuestas:', error);
+                }
+            };
 
-        fetchResponses();
-    }, [postId]);
+            fetchResponses();
+        },
+
+        [postId]);
 
     return ( <
             div > {
-                responses.map((response) => ( < div key = { response._id } > < p > < strong > { response.userId } < /strong>: {response.text}</p > ,
-
+                responses.map((response) => ( < div key = { response._id } >
                     <
-                    /div>))
+                    p > < strong > { response.userId } < /strong>: {response.text}</p > < /div>)
                 } < /div>);
             }
 

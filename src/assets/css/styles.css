@@ -615,19 +615,6 @@ button:hover .button-icon {
 }
 
 
-/* Transformación a escorpión al pasar el mouse */
-
-.login-container button:hover::before {
-    content: '🦂';
-    font-size: 20px;
-    position: absolute;
-    right: 10px;
-    transform: rotate(20deg);
-    color: #ffffff;
-    transition: transform 0.3s ease-in-out;
-}
-
-
 /* Estilos adicionales */
 
 .login-title {
@@ -684,4 +671,65 @@ button:hover .button-icon {
     color: var(--color-name-user);
     font-size: 2rem;
     font-weight: bold;
+}
+
+
+/* General styles */
+
+.login-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+/* Button styles */
+
+.submit-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 18px;
+    border-radius: 5px;
+    cursor: pointer;
+    position: relative;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+
+/* Zoom effect */
+
+.submit-button:hover {
+    transform: scale(1.1);
+    /* Slightly zooms in */
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    /* Adds shadow for focus effect */
+}
+
+
+/* Magnifying glass effect */
+
+.submit-button::after {
+    content: '🔍';
+    /* Magnifying glass icon */
+    position: absolute;
+    right: 10px;
+    opacity: 0;
+    transform: scale(0.8);
+    /* Initial size of the icon */
+    transition: opacity 0.2s, transform 0.2s;
+}
+
+.submit-button:hover::after {
+    opacity: 1;
+    transform: scale(1.2);
+    /* Magnifies the icon */
 }

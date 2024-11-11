@@ -5,14 +5,17 @@ import ResponseList from './ResponseList';
 function Post({ post, userId }) {
     return ( <
         div >
+
+
         <
-        h3 > { post.title } < /h3> <
+        h3 > { post.title } < /h3>   <
         p > { post.content } < /p> <
         ResponseList postId = { post._id }
-        /> <
-        ResponseForm postId = { post._id }
-        userId = { userId }
-        /> <
+        /> <ResponseForm postId = { post._id } userId = { userId }/ >
+
+
+
+        <
         /div>
     );
 }

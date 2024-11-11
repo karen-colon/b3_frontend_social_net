@@ -22,7 +22,6 @@ const ReplyForm = ({ postId, onReplySubmitted }) => {
         } catch (error) {
             console.error('Error al enviar la respuesta:', error);
         }
-
     };
     return ( < form onSubmit = { submitReply } >
         <
@@ -32,6 +31,8 @@ const ReplyForm = ({ postId, onReplySubmitted }) => {
         rows = "3" / >
         <
         button type = "submit" > Responder < /button> </form >
+
+
     );
 };
 

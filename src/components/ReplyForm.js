@@ -1,36 +1,32 @@
+// src/components/ReplyForm.js
 import React, { useState } from 'react';
-import axios from 'axios';
 
 const ReplyForm = ({ postId, onReplySubmitted }) => {
     const [replyText, setReplyText] = useState('');
 
-    const handleReplyChange = (e) => {
-        setReplyText(e.target.value);
-    };
-
-    const submitReply = async(e) => {
+    const handleSubmit = async(e) => {
         e.preventDefault();
-        try {
-            const response = await axios.post(`http://localhost:3900/api/replies`, {
-                postId,
-                content: replyText,
-            });
-            if (response.status === 201) {
-                setReplyText('');
-                onReplySubmitted(response.data); // Actualiza el estado de respuestas en la publicación
-            }
-        } catch (error) {
-            console.error('Error al enviar la respuesta:', error);
+        // Aquí debes llamar a la API para enviar la respuesta
+        const response = await fetch(`http://localhost:3900/api/posts/${postId}/reply`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ text: replyText }),
+        });
+        if (response.ok) {
+            setReplyText('');
+            onReplySubmitted();
         }
     };
 
     return ( <
-        form onSubmit = { submitReply } >
+        form onSubmit = { handleSubmit } >
         <
         textarea value = { replyText }
-        onChange = { handleReplyChange }
-        placeholder = "Escribe tu respuesta aquí"
-        rows = "3" /
+        onChange = {
+            (e) => setReplyText(e.target.value) }
+        placeholder = "Escribe una respuesta..." /
         >
         <
         button type = "submit" > Responder < /button> <

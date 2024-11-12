@@ -12,7 +12,17 @@
     <div id="root">
         <script type="module" src="/src/main.jsx"></script>
     </div>
-
+    <div class="responses">
+        <h3>Respuestas</h3>
+        <div v-for="response in post.responses" :key="response._id">
+            <p>{{ response.text }}</p>
+            <p>{{ response.user.name }}</p>
+        </div>
+    </div>
+    <div class="response-form">
+        <textarea v-model="newResponseText" placeholder="Escribe tu respuesta..."></textarea>
+        <button @click="submitResponse">Responder</button>
+    </div>
 
 </body>
 

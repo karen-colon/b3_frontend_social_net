@@ -23,7 +23,6 @@ export const PublicationList = ({publications, getPublications, page, setPage, m
         let next = page + 1;
         setPage(next);
         getPublications(next);
-        
     }
 
     // Función para eliminar una publicación con confirmación de SweetAlert
@@ -172,8 +171,6 @@ export const PublicationList = ({publications, getPublications, page, setPage, m
     )
 }
 
-
-
 PublicationList.propTypes = {
     publications: PropTypes.array.isRequired,
     getPublications: PropTypes.func.isRequired,
@@ -183,5 +180,3 @@ PublicationList.propTypes = {
     setMore: PropTypes.func.isRequired,
     isProfile: PropTypes.bool
 };
-
-

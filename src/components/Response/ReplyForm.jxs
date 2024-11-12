@@ -8,7 +8,6 @@ const ReplyForm = ({ postId, onReplySubmitted }) => {
         setReplyText(e.target.value);
     };
 
-
     const submitReply = async(e) => {
         e.preventDefault();
         try {
@@ -23,20 +22,25 @@ const ReplyForm = ({ postId, onReplySubmitted }) => {
         } catch (error) {
             console.error('Error al enviar la respuesta:', error);
         }
-
     };
-    return ( < form onSubmit = { submitReply } >
+
+    return <div >
+        <
+        form onSubmit = { submitReply } >
         <
         textarea value = { replyText }
-        onChange = { handleReplyChange }
-        placeholder = "Escribe tu respuesta aquí"
-        rows = "3" / >
-        <
-        button type = "submit" > Responder < /button>  <
-        /form >
-    );
+    onChange = { handleReplyChange }
+    placeholder = "Escribe tu respuesta aquí"
+    rows = "3" / > < button type = "submit" > Responder < /button> 
 
+    <
+    /form > 
 
+    <
+    /div>
 };
+
+
+
 
 export default ReplyForm;

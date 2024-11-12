@@ -20,17 +20,15 @@ const ReplyForm = ({ postId, onReplySubmitted }) => {
         }
     };
 
-    return ( <
-        form onSubmit = { handleSubmit } >
+    return ( < form onSubmit = { handleSubmit } >
         <
         textarea value = { replyText }
         onChange = {
-            (e) => setReplyText(e.target.value) }
-        placeholder = "Escribe una respuesta..." /
-        >
+            (e) => setReplyText(e.target.value)
+        }
+        placeholder = "Escribe una respuesta..." / >
         <
-        button type = "submit" > Responder < /button> <
-        /form>
+        button type = "submit" > Responder < /button> </form >
     );
 };
 

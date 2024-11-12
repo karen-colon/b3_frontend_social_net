@@ -32,7 +32,8 @@ const ReplyForm = ({ postId, onReplySubmitted }) => {
         placeholder = "Escribe tu respuesta aquí"
         rows = "3" / >
         <
-        button type = "submit" > Responder < /button> </form >
+        button type = "submit" > Responder < /button>  <
+        /form >
     );
 
 

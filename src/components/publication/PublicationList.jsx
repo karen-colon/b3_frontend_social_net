@@ -5,11 +5,14 @@ import useAuth from '../../hooks/useAuth';
 import avatar from '../../assets/img/default.png';
 import ReactTimeAgo from "react-time-ago";
 import Swal from 'sweetalert2';
+import { useState } from 'react'; // Importamos useState para manejar la publicación seleccionada
 
-export const PublicationList = ({publications, getPublications, page, setPage, more, setMore, isProfile = false}) => {
+export const PublicationList = ({ publications, getPublications, page, setPage, more, setMore, isProfile = false }) => {
 
     const { auth, setCounters } = useAuth();
     const navigate = useNavigate();
+    const [selectedPublication, setSelectedPublication] = useState(null); // Estado para la publicación seleccionada
+    const [responseText, setResponseText] = useState(""); // Estado para el texto de la respuesta
 
     // Función para manejar la redirección al detalle de la publicación
     const handleClick = (publicationId) => {
@@ -23,7 +26,7 @@ export const PublicationList = ({publications, getPublications, page, setPage, m
         let next = page + 1;
         setPage(next);
         getPublications(next);
-    }
+    };
 
     // Función para eliminar una publicación con confirmación de SweetAlert
     const deletePublication = async (publicationId) => {
@@ -51,8 +54,6 @@ export const PublicationList = ({publications, getPublications, page, setPage, m
 
                 const data = await request.json();
 
-                
-
                 // Mostrar mensaje de éxito o error
                 if (data.status === "success") {
                     Swal.fire(
@@ -70,7 +71,6 @@ export const PublicationList = ({publications, getPublications, page, setPage, m
                         ...prevCounters,
                         publicationsCount: prevCounters.publicationsCount - 1, // Decrementa en 1
                     }));
-
                 } else {
                     Swal.fire(
                         'Error',
@@ -80,14 +80,48 @@ export const PublicationList = ({publications, getPublications, page, setPage, m
                 }
             }
         });
-    }
+    };
+
+    // Función para manejar la publicación seleccionada
+    const handleSelectPublication = (publicationId) => {
+        setSelectedPublication(publications.find(pub => pub._id === publicationId)); // Encontramos la publicación seleccionada
+        setResponseText(""); // Limpiamos el campo de respuesta
+    };
+
+    // Función para manejar la respuesta
+    const handleResponseSubmit = async () => {
+        if (!responseText.trim()) return; // Si no hay texto, no hacemos nada
+
+        const response = {
+            publicationId: selectedPublication._id,
+            text: responseText,
+        };
+
+        // Llamada para enviar la respuesta (aquí puede variar según tu backend)
+        const request = await fetch(Global.url + "publication/response", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": localStorage.getItem("token"),
+            },
+            body: JSON.stringify(response),
+        });
+
+        const data = await request.json();
+
+        if (data.status === "success") {
+            Swal.fire('Respuesta enviada', 'Tu respuesta ha sido enviada con éxito', 'success');
+            setResponseText(""); // Limpiamos el campo de respuesta
+            setSelectedPublication(null); // Desmarcamos la publicación seleccionada
+        } else {
+            Swal.fire('Error', 'Hubo un error al enviar la respuesta', 'error');
+        }
+    };
 
     return (
         <>
             <div className="content__posts">
-
                 {publications.map(publication => {
-
                     // Verificar que publication y publication.user no sean undefined
                     if (!publication || !publication.user_id) {
                         return null; // Saltar publicaciones sin usuario
@@ -95,12 +129,10 @@ export const PublicationList = ({publications, getPublications, page, setPage, m
 
                     return (
                         <article className="posts__post" key={publication._id}
-                            onClick={() => handleClick(publication._id)} // Maneja el clic en la publicación
+                            onClick={() => handleSelectPublication(publication._id)} // Seleccionamos la publicación
                             style={{ cursor: 'pointer' }} // Cambiar el cursor a pointer para mostrar que es clicable
                         >
-
                             <div className="post__container">
-
                                 <div className="post__image-user">
                                     <Link to={`/rsocial/perfil/${publication.user_id._id}`} className="post__image-link">
                                         {publication.user_id.image !== "default.png" && (
@@ -113,7 +145,6 @@ export const PublicationList = ({publications, getPublications, page, setPage, m
                                 </div>
 
                                 <div className="post__body">
-
                                     <div className="post__user-info">
                                         <Link to={`/rsocial/perfil/${publication.user_id._id}`} className="user-info__name">
                                             {publication.user_id.name && publication.user_id.last_name ? (
@@ -132,23 +163,32 @@ export const PublicationList = ({publications, getPublications, page, setPage, m
                                         <img src={publication.file} alt="Imagen de publicación" className="post__image-publication" />
                                     )}
                                 </div>
-
                             </div>
 
                             {/* Mostrar botón para eliminar si el usuario es el dueño de la publicación */}
                             {auth._id === publication.user_id._id &&
                                 <div className="post__buttons">
-
                                     <button onClick={() => deletePublication(publication._id)} className="post__button">
                                         <i className="fa-solid fa-trash-can"></i>
                                     </button>
-
                                 </div>
                             }
-
-                        </article>);
-                })};
+                        </article>
+                    );
+                })}
             </div>
+
+            {/* Si se ha seleccionado una publicación, mostrar campo de respuesta */}
+            {selectedPublication && (
+                <div className="response-container">
+                    <textarea
+                        value={responseText}
+                        onChange={(e) => setResponseText(e.target.value)}
+                        placeholder="Escribe tu respuesta..."
+                    />
+                    <button onClick={handleResponseSubmit}>Responder</button>
+                </div>
+            )}
 
             {/* Si no estamos en el perfil, mostrar el botón de "Ver más publicaciones" */}
             {!isProfile && more && (
@@ -168,8 +208,8 @@ export const PublicationList = ({publications, getPublications, page, setPage, m
                 </div>
             )}
         </>
-    )
-}
+    );
+};
 
 PublicationList.propTypes = {
     publications: PropTypes.array.isRequired,
@@ -178,5 +218,5 @@ PublicationList.propTypes = {
     setPage: PropTypes.func.isRequired,
     more: PropTypes.bool.isRequired,
     setMore: PropTypes.func.isRequired,
-    isProfile: PropTypes.bool
+    isProfile: PropTypes.bool,
 };

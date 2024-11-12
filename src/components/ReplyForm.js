@@ -24,23 +24,18 @@ const ReplyForm = ({ postId, onReplySubmitted }) => {
         }
     };
 
-    return <div >
-        <
+    return ( <
         form onSubmit = { submitReply } >
         <
         textarea value = { replyText }
-    onChange = { handleReplyChange }
-    placeholder = "Escribe tu respuesta aquí"
-    rows = "3" / > < button type = "submit" > Responder < /button> 
-
-    <
-    /form > 
-
-    <
-    /div>
+        onChange = { handleReplyChange }
+        placeholder = "Escribe tu respuesta aquí"
+        rows = "3" /
+        >
+        <
+        button type = "submit" > Responder < /button> <
+        /form>
+    );
 };
-
-
-
 
 export default ReplyForm;
